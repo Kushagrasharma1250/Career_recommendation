@@ -161,16 +161,14 @@ def index():
                         raw_pred = float(pred)
                     except Exception as e:
                         return render_template('index.html', prediction=f"Prediction error: {e}", model_used=None)
-
-                import numpy as _np
                 n_classes = len(le.classes_)
-                idx = int(_np.round(raw_pred))
+                idx = int(np.round(raw_pred))
                 idx = max(0, min(idx, n_classes - 1))
                 try:
                     prediction = le.inverse_transform([idx])[0]
                 except Exception:
-                    indices = _np.arange(n_classes)
-                    nearest = int(_np.argmin(_np.abs(indices - raw_pred)))
+                    indices = np.arange(n_classes)
+                    nearest = int(np.argmin(np.abs(indices - raw_pred)))
                     prediction = le.inverse_transform([nearest])[0]
         else:
             if rf_clf is not None:
@@ -190,16 +188,14 @@ def index():
                         raw_pred = float(pred)
                     except Exception as e:
                         return render_template('index.html', prediction=f"Prediction error: {e}", model_used=None)
-
-                import numpy as _np
                 n_classes = len(le.classes_)
-                idx = int(_np.round(raw_pred))
+                idx = int(np.round(raw_pred))
                 idx = max(0, min(idx, n_classes - 1))
                 try:
                     prediction = le.inverse_transform([idx])[0]
                 except Exception:
-                    indices = _np.arange(n_classes)
-                    nearest = int(_np.argmin(_np.abs(indices - raw_pred)))
+                    indices = np.arange(n_classes)
+                    nearest = int(np.argmin(np.abs(indices - raw_pred)))
                     prediction = le.inverse_transform([nearest])[0]
 
     return render_template('index.html', prediction=prediction, model_used=model_used)

@@ -30,7 +30,6 @@ def main():
         df_gender = df[gender_col].fillna('unknown').astype(str)
         le.fit(df_gender)
         joblib.dump(le, os.path.join(model_dir, 'gender_le.pkl'))
-        print('Saved gender LabelEncoder to gender_le.pkl')
     else:
         print(f'Gender column {gender_col} not found in CSV; skipping gender encoder')
 
@@ -41,7 +40,6 @@ def main():
         mlb_interest = MultiLabelBinarizer()
         mlb_interest.fit(df_interest)
         joblib.dump(mlb_interest, os.path.join(model_dir, 'mlb_interest.pkl'))
-        print('Saved interest MultiLabelBinarizer to mlb_interest.pkl')
     else:
         print(f'Interest column {interest_col} not found in CSV; skipping interest mlb')
 
@@ -52,7 +50,6 @@ def main():
         mlb_skills = MultiLabelBinarizer()
         mlb_skills.fit(df_skills)
         joblib.dump(mlb_skills, os.path.join(model_dir, 'mlb.pkl'))
-        print('Saved skills MultiLabelBinarizer to mlb.pkl')
 
 
 if __name__ == '__main__':

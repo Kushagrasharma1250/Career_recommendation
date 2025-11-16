@@ -81,7 +81,6 @@ def main():
     df['course'] = df['course'].fillna('unknown').astype(str)
     y = le_course.fit_transform(df['course'])
     joblib.dump(le_course, os.path.join(model_dir, 'le.pkl'))
-    print('Saved label encoder le.pkl (target)')
 
     # Fit MultiLabelBinarizer for interests and skills
     mlb_interest = MultiLabelBinarizer()
@@ -90,7 +89,6 @@ def main():
     mlb_skills.fit(df['skills'])
     joblib.dump(mlb_interest, os.path.join(model_dir, 'mlb_interest.pkl'))
     joblib.dump(mlb_skills, os.path.join(model_dir, 'mlb.pkl'))
-    print('Saved mlb_interest.pkl and mlb.pkl (skills)')
 
     # Build encoded DataFrame
     df_interest = pd.DataFrame(mlb_interest.transform(df['interest']), columns=mlb_interest.classes_)
@@ -110,13 +108,11 @@ def main():
     # Save feature columns order
     feature_cols = list(X.columns)
     joblib.dump(feature_cols, os.path.join(model_dir, 'feature_columns.pkl'))
-    print(f'Saved feature_columns.pkl ({len(feature_cols)} columns)')
 
     # Scale numeric columns (for LR)
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     joblib.dump(scaler, os.path.join(model_dir, 'sc.sav'))
-    print('Saved scaler sc.sav')
 
     # Train/test split (no stratify because some classes have very few samples)
     X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=101)
@@ -128,11 +124,7 @@ def main():
     y_pred = rf_clf.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print('RandomForestClassifier accuracy on test:', acc)
-    print('Classification report (labels are encoded integers):')
-    print(classification_report(y_test, y_pred))
-    print('Label encoder class count:', len(le_course.classes_))
     joblib.dump(rf_clf, os.path.join(model_dir, 'rf_clf.sav'))
-    print('Saved rf_clf.sav')
 
     # Train LogisticRegression (as alternative)
     print('Training LogisticRegression (multinomial, max_iter=1000)...')
@@ -141,10 +133,7 @@ def main():
     y_pred_lr = lr_clf.predict(X_test)
     acc_lr = accuracy_score(y_test, y_pred_lr)
     print('LogisticRegression accuracy on test:', acc_lr)
-    print('Classification report (LR) (labels are encoded integers):')
-    print(classification_report(y_test, y_pred_lr))
     joblib.dump(lr_clf, os.path.join(model_dir, 'lr_clf.sav'))
-    print('Saved lr_clf.sav')
 
     print('Retraining complete.')
 

@@ -14,9 +14,7 @@ def main():
     if hasattr(sc, 'feature_names_in_'):
         cols = list(sc.feature_names_in_)
     elif hasattr(sc, 'mean_'):
-        # Fallback: create placeholder names matching length
         cols = [f'col_{i}' for i in range(len(sc.mean_))]
-        print('Warning: scaler has no feature_names_in_; creating placeholder column names')
     else:
         raise RuntimeError('Scaler does not expose feature names or mean_')
 

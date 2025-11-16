@@ -37,10 +37,7 @@ def main():
     print("Fitting MultiLabelBinarizer on skills ...")
     mlb.fit(df['skills_list'])
 
-    print(f"Saving fitted MultiLabelBinarizer to {mlb_path} ...")
     joblib.dump(mlb, mlb_path)
-
-    print("Done. You can now restart your Flask app.")
 
 
 if __name__ == '__main__':
