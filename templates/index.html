@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Course Recommendation System</h1>
+        <form method="POST">
+            <label for="skills">Enter your skills (comma-separated):</label><br>
+            <input type="text" id="skills" name="skills" required><br><br>
+
+            <label for="interests">Enter your interests (comma-separated):</label><br>
+            <input type="text" id="interests" name="interests"><br><br>
+
+            <label for="gender">Gender:</label><br>
+            <select name="gender" id="gender">
+                <option value="">Prefer not to say</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br><br>
+
+            <label for="grades">Grades (numeric):</label><br>
+            <input type="number" step="any" id="grades" name="grades"><br><br>
+
+            <label for="model">Choose a model:</label><br>
+            <select name="model" id="model">
+                <option value="lr">Linear Regression</option>
+                <option value="rf">Random Forest</option>
+            </select><br><br>
+
+            <input type="submit" value="Get Recommendation">
+        </form>
+
+        {% if prediction %}
+            <h2>Recommended Course:</h2>
+            <p>{{ prediction }} (via {{ model_used }})</p>
+        {% endif %}
+    </div>
+</body>
+</html>
